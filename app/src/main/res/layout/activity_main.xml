@@ -9,20 +9,68 @@
     tools:context=".MainActivity">
 
 <EditText
+    android:layout_marginTop="50dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:hint="Username"
+    android:id="@+id/username"
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
     android:padding="10dp"
     android:layout_gravity="center"
     android:background="@drawable/border"></EditText>
 
-    <Button
-        android:layout_marginLeft="100dp"
-        android:id="@+id/Button1"
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="password"
+        android:id="@+id/password"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:padding="10dp"
+        android:layout_gravity="center"
+        android:background="@drawable/border"></EditText>
+
+    <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign in with Google" />
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:id="@+id/progress"
+        android:visibility="gone">
+
+    </ProgressBar>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/register"
+        android:layout_marginTop="20dp"
+        android:text="Register here"></TextView>
+
+    <Button
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/Button2"
+        android:textColor="@color/black"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:text="Login"
+       ></Button>
+
+    <Button
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/Button1"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="180dp"
+        android:drawableLeft="@drawable/download2"></Button>
 
 </LinearLayout>
