@@ -2,7 +2,9 @@ package com.example.pas;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -10,20 +12,29 @@ public class SplashScreen extends AppCompatActivity {
 
     private static final int SPLASH_DELAY = 5000;
 
+    public static final String SHARED_PREFS = "shared_prefs";
+    public static final String EMAIL_KEY = "email_key";
+    public static final String PASSWORD_KEY = "password_key";
+    SharedPreferences sharedpreferences;
+    String email, password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        sharedpreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        email = sharedpreferences.getString(EMAIL_KEY, null);
+        password = sharedpreferences.getString(PASSWORD_KEY, null);
 
-        // Menggunakan handler untuk menunda navigasi ke MainActivity
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // Intent untuk membuka MainActivity setelah splashscreen selesai
-                Intent intent = new Intent(SplashScreen.this, MainActivity.class);
-                startActivity(intent);
-                finish(); // Menutup SplashActivity agar tidak dapat diakses kembali
-            }
-        }, SPLASH_DELAY);
+
+        if (email != null && password != null) {
+            Intent i = new Intent(SplashScreen.this, Tmdb.class);
+            startActivity(i);
+        }else{
+            Intent i = new Intent(SplashScreen.this, MainActivity.class);
+            startActivity(i);
+        }
+        finish();
+
     }
 }
