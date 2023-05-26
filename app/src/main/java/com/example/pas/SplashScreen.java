@@ -10,7 +10,7 @@ import android.os.Handler;
 
 public class SplashScreen extends AppCompatActivity {
 
-    private static final int SPLASH_DELAY = 5000;
+
 
     public static final String SHARED_PREFS = "shared_prefs";
     public static final String EMAIL_KEY = "email_key";

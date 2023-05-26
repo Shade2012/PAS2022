@@ -15,6 +15,9 @@ public class kucingModel implements Parcelable {
         width = in.readString();
         height = in.readString();
     }
+    public kucingModel() {
+
+    }
 
     public static final Creator<kucingModel> CREATOR = new Creator<kucingModel>() {
         @Override
@@ -27,9 +30,7 @@ public class kucingModel implements Parcelable {
             return new kucingModel[size];
         }
     };
-    public kucingModel() {
 
-    }
 
     public String getImage() {
         return image;
