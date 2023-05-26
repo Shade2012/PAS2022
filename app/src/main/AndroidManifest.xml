@@ -17,6 +17,13 @@
         android:theme="@style/Theme.PAS"
         tools:targetApi="31">
         <activity
+            android:name=".detailpage"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".register"
             android:exported="false">
             <meta-data
