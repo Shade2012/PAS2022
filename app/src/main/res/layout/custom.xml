@@ -21,6 +21,7 @@
 
             <ImageView
                 android:id="@+id/kucing"
+                android:longClickable="true"
                 android:layout_width="100dp"
                 android:layout_height="120dp" />
 
@@ -31,6 +32,7 @@
 
                 <TextView
                     android:id="@+id/tvname"
+                    android:longClickable="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"

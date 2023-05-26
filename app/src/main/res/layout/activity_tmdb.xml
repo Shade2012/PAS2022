@@ -7,6 +7,13 @@
     android:orientation="vertical"
     tools:context=".SplashScreen">
 
+    <androidx.appcompat.widget.ActionMenuView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/action_menu_view"
+        android:layout_gravity="end"
+        ></androidx.appcompat.widget.ActionMenuView>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,6 +33,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycled"
+        android:longClickable="true"
         android:layout_width="match_parent"
         android:visibility="gone"
         android:layout_height="match_parent"

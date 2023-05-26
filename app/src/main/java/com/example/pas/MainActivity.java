@@ -20,11 +20,22 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
+    private GoogleSignInClient mGoogleSignInClient;
+    private static final int RC_SIGN_IN = 9001;
+
+
+
     public static final String SHARED_PREFS = "shared_prefs";
 
     public static final String EMAIL_KEY = "email_key";
@@ -34,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sharedpreferences;
     String email, password;
 
-    private static final int RC_SIGN_IN = 9001;
+
     private ProgressBar progressBar;
     private Button signInButton,Buttonlogin;
     private EditText txtusername,txtpassword;
@@ -51,6 +62,15 @@ public class MainActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progress);
         signInButton = findViewById(R.id.Button1);
         register = findViewById(R.id.register);
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this, gso);
+
+
+
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,10 +81,11 @@ public class MainActivity extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Panggil fungsi untuk memulai proses Sign-In
-                startSignIn();
+                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+                startActivityForResult(signInIntent,RC_SIGN_IN);
             }
         });
+
 
         Buttonlogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 String username2 = txtusername.getText().toString();
                 String password2 = txtpassword.getText().toString();
                 progressBar.setVisibility(View.VISIBLE);
-                Buttonlogin.setEnabled(false);
+                Buttonlogin.setVisibility(View.GONE);
                 AndroidNetworking.post("https://mediadwi.com/api/latihan/login")
                         .addBodyParameter("username", username2)
                         .addBodyParameter("password", password2)
@@ -85,15 +106,16 @@ public class MainActivity extends AppCompatActivity {
                                     boolean status = response.getBoolean("status");
                                     String message = response.getString("message");
                                     //ini saya bikin if nya bertulisan status karna default nya dibaca jika status = true maka jalankan perintah
-                                    if (status){
+                                    if (status == true) {
                                         Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
                                         sharedpreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
                                         SharedPreferences.Editor editor = sharedpreferences.edit();
                                         editor.putString(EMAIL_KEY, username2.toString());
                                         editor.putString(PASSWORD_KEY, "");
+                                        // to save our data with key and value.
                                         editor.apply();
 
-                                        startActivity(new Intent(MainActivity.this, Tmdb.class));
+                                        startActivity(new Intent(MainActivity.this, SplashScreen.class));
                                         finish();
                                     }else{
                                         Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
@@ -103,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
                                 }
                                 progressBar.setVisibility(View.GONE);
                                 Buttonlogin.setEnabled(true);
+                                Buttonlogin.setVisibility(View.VISIBLE);
                             }
 
 
@@ -114,25 +137,31 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                sharedpreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(EMAIL_KEY,account.getId());
+                editor.putString(PASSWORD_KEY, "");
+                // to save our data with key and value.
+                editor.apply();
 
-    private void startSignIn() {
-        // Intent untuk memulai Sign-In menggunakan Google Sign-In API
-        Intent signInIntent = new Intent(this, SignInActivity.class);
-        startActivityForResult(signInIntent, RC_SIGN_IN);
+                startActivity(new Intent(MainActivity.this, SplashScreen.class));
+                finish();
+                // Proses sign-in berhasil, Anda dapat menyimpan data akun menggunakan Shared Preferences di sini
+            } catch (ApiException e) {
+                // Sign-in gagal, Anda dapat menangani kesalahan di sini
+            }
+        }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RC_SIGN_IN) {
-            // Proses hasil dari Sign-In
-            // ...
-            Intent myIntent = new Intent(MainActivity.this, Tmdb.class);
-            MainActivity.this.startActivity(myIntent);
-
-            // Misalnya, Anda dapat memperbarui UI setelah berhasil Sign-In
-            // signInButton.setVisibility(View.GONE);
-        }
-
-    }}
+    private void signIn() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+}
