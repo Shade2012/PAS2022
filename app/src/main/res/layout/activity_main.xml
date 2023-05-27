@@ -9,7 +9,7 @@
     tools:context=".MainActivity">
 <ImageView
     android:layout_width="wrap_content"
-    android:src="@drawable/kucing"
+    android:src="@drawable/movie"
     android:layout_gravity="center"
     android:layout_marginTop="20dp"
     android:layout_height="wrap_content"></ImageView>
@@ -30,6 +30,7 @@
         android:layout_height="wrap_content"
         android:hint="Password"
         android:id="@+id/password"
+        android:inputType="textPassword"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"

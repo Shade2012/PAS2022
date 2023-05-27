@@ -9,8 +9,9 @@
 
     <androidx.cardview.widget.CardView
         app:cardCornerRadius="20dp"
+        android:backgroundTint="@color/whitegrey"
         android:id="@+id/card"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -22,7 +23,7 @@
             <ImageView
                 android:id="@+id/kucing"
                 android:longClickable="true"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="120dp" />
 
             <LinearLayout
@@ -31,7 +32,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvname"
+                    android:id="@+id/tvid"
                     android:longClickable="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -41,6 +42,18 @@
                     android:textSize="24sp"
                     android:textStyle="bold"
 
+                    />
+                <TextView
+                    android:id="@+id/tvname"
+                    android:longClickable="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+
+                    android:text="This is tahun"
+                    android:textColor="#a9b5c2"
+                    android:textSize="20sp"
                     />
 
 

@@ -21,6 +21,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,24 +44,27 @@ public kucingAdapter adapterlistkucing;
     ProgressBar progressBar;
 
     public void getkucingonline(){
-        String url = "https://api.thecatapi.com/v1/images/search?limit=10";
-
-        AndroidNetworking.get(url)
+         String apiUrl = "https://api.themoviedb.org/3/movie/popular?api_key=e2c7fdf1ae549cb1dca14d95197845b5" ;
+        AndroidNetworking.get(apiUrl)
                 .setPriority(Priority.LOW)
+                .setTag("test")
                 .build()
-                .getAsJSONArray(new JSONArrayRequestListener() {
+                .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public void onResponse(JSONObject response) {
                         // Handle the response here
                         try {
+
+                            JSONArray jsonarraykucing = response.getJSONArray("results");
                             // Parse the JSON response
-                            for (int i = 0; i < response.length(); i++) {
+                            for (int i = 0; i < jsonarraykucing.length(); i++) {
                                 kucingModel mykucing = new kucingModel();
-                                JSONObject jsonkucing = response.getJSONObject(i);
-                                mykucing.setId(jsonkucing.getString("id"));
-                                mykucing.setImage(jsonkucing.getString("url"));
-                                mykucing.setWidth(jsonkucing.getString("width"));
-                                mykucing.setHeight(jsonkucing.getString("height"));
+                                JSONObject jsonkucing = jsonarraykucing.getJSONObject(i);
+                                mykucing.setId(jsonkucing.getString("release_date"));
+                                mykucing.setImage(jsonkucing.getString("poster_path"));
+                                mykucing.setWidth(jsonkucing.getString("overview"));
+                                mykucing.setImage2(jsonkucing.getString("backdrop_path"));
+                                mykucing.setHeight(jsonkucing.getString("original_title"));
 
                                 listdatakucing.add(mykucing);
 

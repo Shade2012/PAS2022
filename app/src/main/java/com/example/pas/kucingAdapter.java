@@ -30,13 +30,14 @@ public class kucingAdapter extends RecyclerView.Adapter<kucingAdapter.MyViewHold
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-    public TextView tvid;
+    public TextView tvid,tvname;
     public ImageView img;
 
     public MyViewHolder(View view){
     super(view);
     tvid = view.findViewById(R.id.tvname);
     img = view.findViewById(R.id.kucing);
+    tvname = view.findViewById(R.id.tvid);
     file_progressbar = view.findViewById(R.id.progress);
     view.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -74,7 +75,8 @@ this.kucinglist = kucinglist;
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 final kucingModel kucing =this.kucinglist.get(position);
 holder.tvid.setText(kucing.getId());
-Glide.with(holder.img.getContext()).load(kucing.getImage()).apply(new RequestOptions()).into(holder.img);
+holder.tvname.setText(kucing.getHeight());
+Glide.with(holder.img.getContext()).load("https://image.tmdb.org/t/p/w500" + kucing.getImage()).apply(new RequestOptions()).into(holder.img);
 
     }
 
