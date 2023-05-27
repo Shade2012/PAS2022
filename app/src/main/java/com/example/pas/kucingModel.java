@@ -8,9 +8,19 @@ public class kucingModel implements Parcelable {
     private String id;
     private String width;
     private String height;
+    private String image2;
+
+    public String getImage2() {
+        return image2;
+    }
+
+    public void setImage2(String image2) {
+        this.image2 = image2;
+    }
 
     protected kucingModel(Parcel in) {
         image = in.readString();
+        image2 = in.readString();
         id = in.readString();
         width = in.readString();
         height = in.readString();
@@ -75,6 +85,7 @@ public class kucingModel implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(image);
+        dest.writeString(image2);
         dest.writeString(id);
         dest.writeString(width);
         dest.writeString(height);

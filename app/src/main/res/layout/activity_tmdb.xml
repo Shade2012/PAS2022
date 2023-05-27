@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="@color/whitegrey"
     android:orientation="vertical"
     tools:context=".SplashScreen">
 
@@ -14,6 +15,7 @@
         android:layout_gravity="end"
         ></androidx.appcompat.widget.ActionMenuView>
 
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,7 +24,7 @@
         android:textStyle="bold"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="100px"
-        android:text="Data Kucing"></TextView>
+        android:text="Data Film"></TextView>
 
 <ProgressBar
     android:id="@+id/progress"

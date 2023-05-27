@@ -25,9 +25,10 @@ ImageView img;
         img = findViewById(R.id.imageview2);
         i =getIntent();
         kucingmodel = (kucingModel)i.getParcelableExtra("mykucing");
-        id.setText(kucingmodel.getId());
+
         height.setText(kucingmodel.getHeight());
         widht.setText(kucingmodel.getWidth());
-        Glide.with(img.getContext()).load(kucingmodel.getImage()).into(img);
+        id.setText(kucingmodel.getId());
+        Glide.with(this).load("https://image.tmdb.org/t/p/original" + kucingmodel.getImage2()).into(img);
     }
 }
